@@ -1,52 +1,20 @@
-import { Link } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
 import { ErrorText, Display } from "@/components/Typography"
 import { InputText } from "@/components/Form/Input"
 import { ButtonPrimary } from "@/components/ui/Buttons"
-import { useState } from "react"
-import { FormProvider, useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, FormLoginData } from "@/validation/login"
-import { useAuth } from "@/hooks"
-import { apiAuthenticator } from "@/services"
-import { Navigate } from "react-router-dom";
+import { FormProvider } from "react-hook-form"
+import { useLogin } from "@/hooks/pages/useLogin"
 
 export function Login() {
+    const { formLogin, currentTheme, currentUser, errorMessage, loading, submitForm} = useLogin()
 
-    const formLogin = useForm<FormLoginData>({
-        resolver: zodResolver(loginSchema),
-        reValidateMode: 'onChange',
-    })
-
-    const { signIn, currentUser } = useAuth()
-
-    const [loading, setLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState("")
-
-    const submitForm = async (data: FormLoginData) => {
-        setErrorMessage("")
-        setLoading(true)
-        const formData = new FormData()
-        formData.append('username', data.username)
-        formData.append('password', data.password)
-        try {
-            const response = await apiAuthenticator.post('login/', formData)
-            signIn(response.data.accessToken, response.data.refreshToken)
-        } catch (error) {
-            if (typeof error === 'string')
-                setErrorMessage(error)
-            else
-                setErrorMessage("Não foi possível realizar o login. Se persistir, contate o suporte.")
-        }
-        setLoading(false)
-    }
-
-    if (currentUser) return (<Navigate to="/app" replace />)
+    if (currentUser) return (<Navigate to="/app" />)
 
     return (
         <FormProvider {...formLogin}>
-            <div className="min-h-screen flex items-center bg-orient-900">
+            <div data-theme={currentTheme} className="min-h-screen flex items-center bg-base-300">
                 <div className="card mx-auto w-full max-w-md shadow-xl">
-                    <div className="grid grid-cols-1 bg-neutral-50 rounded-xl">
+                    <div className="grid grid-cols-1 bg-base-100 rounded-xl">
                         <div className='py-24 px-10'>
                             <div className="flex flex-row items-center w-full justify-center">
                                 <Display className="font-bold text-tango-500 pr-1">Plus</Display>

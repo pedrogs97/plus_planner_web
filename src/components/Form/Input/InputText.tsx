@@ -15,10 +15,10 @@ export function InputText({name, labelTitle, labelStyle, type, containerStyle, p
 
     return(
         <div className={`form-control w-full ${containerStyle}`}>
-            <label className="label text-tango-500">
+            <label className="label">
                 <span className={"label-text" + labelStyle}>{labelTitle}</span>
             </label>
-            <input className="input input-bordered w-full bg-tango-50 text-orient-900" type={type ?? "text"} placeholder={placeholder ?? ""} {...register(name)} />
+            <input className="input input-bordered w-full " type={type ?? "text"} placeholder={placeholder ?? ""} {...register(name)} />
         </div>
     )
 }

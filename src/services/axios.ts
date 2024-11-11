@@ -6,12 +6,12 @@ let isRefreshing = false;
 const failedRequestQueue: Array<IFailedRequestProps> = [];
 
 export const apiAuthenticator = axios.create({
-    baseURL: (import.meta.env.VITE_PLUS_AUTHENTICATOR_BASE_URL as string),
+    baseURL: (import.meta.env.VITE_PLUS_AUTHENTICATOR_BASE_URL),
     responseType: 'json'
 })
 
 export const apiCore = axios.create({
-    baseURL: (import.meta.env.VITE_PLUS_CORE_BASE_URL as string),
+    baseURL: (import.meta.env.VITE_PLUS_CORE_BASE_URL),
     responseType: 'json'
 })
 
@@ -37,7 +37,6 @@ function applyInterceptorsResponse (apiInstance: AxiosInstance) {
     // declare rejeceted function by instance
     function interceptorsResponseRejected (error: AxiosError<unknown>): Promise<AxiosError<unknown>> {
         const { status, data } = (error.response as IBackendResponseProps)
-        console.log(data)
         if (status === 401 && data !== "Credenciais Inválidas") {
             const originalConfig = error.config;
             const refreshToken = localStorage.getItem("refreshToken")

@@ -1,0 +1,13 @@
+export enum MessageType {
+    GET_FULL_MONTH_CALENDAR = 1,
+    GET_FULL_WEEK_CALENDAR = 2,
+    GET_DAY_CALENDAR = 3,
+    ADD_EVENT = 4,
+    EDIT_EVENT = 5,
+    REMOVE_EVENT = 6,
+    CONNECTION = 7,
+    CREATE_UUID = 8,
+    INVALID = 9,
+    ERROR = 10,
+    DISCONNECT = 11,
+}

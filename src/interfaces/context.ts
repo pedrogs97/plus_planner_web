@@ -1,7 +1,15 @@
+import { MessageType } from "@/utils/enums";
+
 export interface IAuthContext {
     signIn: (token: string, refreshToken: string) => void;
+    signOut: () => void;
     currentUser: IUser | null;
 }
+
+export interface IThemeContext {
+    currentTheme: string;
+}
+
 
 export interface ILoginResponse {
     accessToken: string;
@@ -26,4 +34,18 @@ export interface IUser {
     clinic: string;
     clinicId: string | number;
     permissions: object[];
+    token: string;
+    uuid_scheduler: string | null;
+}
+
+export interface IMessage {
+    messageType: MessageType
+    clinicId: number
+    data: never
+}
+
+export interface IWebsocketContext {
+    setSchedulerClientWB: (ws: WebSocket) => void;
+    createSchedulerClientWB: () => WebSocket | void;
+    schedulerClientWB: WebSocket | null;
 }
